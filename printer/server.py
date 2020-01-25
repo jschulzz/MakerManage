@@ -10,14 +10,14 @@ def run_test(printer_id):
 
 @app.route("/disable/<printer_id>")
 def disable_printer(printer_id):
-    return 0
+    return "disable %i" % (printer_id)
 
 
 @app.route("/enable/<printer_id>")
 def enable_printer(printer_id):
-    return 0
+    return "enable %i" % (printer_id)
 
 
 @app.route("/get-status/<printer_id>")
 def get_status(printer_id):
-    return 0
+    return "check on %i" % (printer_id)
