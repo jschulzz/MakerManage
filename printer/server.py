@@ -19,5 +19,5 @@ def enable_printer(printer_id):
 
 
 @app.route("/get-status/<printer_id>")
-def take_photo(printer_id):
+def get_status(printer_id):
     return 0
