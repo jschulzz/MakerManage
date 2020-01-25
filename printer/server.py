@@ -1,11 +1,13 @@
 from flask import Flask
+from send_gcode_file import send_file
 
 app = Flask(__name__)
 
 
 @app.route("/test/<int:printer_id>")
 def run_test(printer_id):
-    return "Hello World"
+    send_file("test.gcode", "/dev/ttyUSB0")
+    return "Sending"
 
 
 @app.route("/disable/<int:printer_id>")
