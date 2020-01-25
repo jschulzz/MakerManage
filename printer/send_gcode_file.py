@@ -1,7 +1,7 @@
 import serial
 import time
 
-ser = serial.Serial("COM4", 115200)
+ser = serial.Serial("COM8", 115200)
 time.sleep(15)
 # print("Sending")
 filepath = "test.gcode"
