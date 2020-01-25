@@ -1,7 +1,5 @@
-
-
 def set_pin(pin, value):
-    import RPi.GPIO from GPIO
+    from RPi.GPIO import GPIO
 
     GPIO.setmode(GPIO.BOARD)
     GPIO.setup(pin, GPIO.OUT)
