@@ -20,9 +20,9 @@ def cb(dog):
 reader = SimpleMFRC522()
 
 try:
-    wdt = swt.WDT(check_interval_sec=0.01, trigger_delta_sec=0.50, callback=cb)
+    wdt = swt.WDT(check_interval_sec=0.01, trigger_delta_sec=5, callback=cb)
     print("test1")
-    id, text = reader.read()
+    id, text = reader.read()ssh
     print("test2")
     print(id)
     print(text)
