@@ -16,6 +16,16 @@ ser = None
 red_LED = 20
 green_LED = 21
 
+def red_on():
+    set_pin(red_LED, 0)
+    set_pin(green_LED, 1)
+    
+def green_on():
+    set_pin(red_LED, 1)
+    set_pin(green_LED, 0)
+
+printer_status = "ENABLED"
+
 @app.route("/test")
 def run_test():
     def do_work():
@@ -28,15 +38,17 @@ def run_test():
 
 @app.route("/disable")
 def disable_printer():
-    set_pin(red_LED, 0)
-    set_pin(green_LED, 1)
+    global printer_status
+    printer_status = "DISABLED"
+    red_on()
     return "disabled"
 
 
 @app.route("/enable")
 def enable_printer():
-    set_pin(red_LED, 1)
-    set_pin(green_LED, 0)
+    global printer_status
+    green_on()
+    printer_status = "ENABLED"
     return "enabled"
 
 
@@ -63,6 +75,8 @@ def status():
 
 @app.route("/RFID/<string:tag_id>")
 def RFIDRecieved(tag_id):
+    global printer_status
+    #print(printer_status)
     tag_id = "No Current User" if tag_id == "None" else tag_id
     print(tag_id)
     LCD(tag_id)
@@ -71,12 +85,22 @@ def RFIDRecieved(tag_id):
         "printer": "Seattle Slew"
         }, timeout=5
     )
-    print(r)
+    if tag_id != "No Current User":
+        [name, training] = r.json()
+        LCD("User: {}\nTraining: {}".format(name, training))
+        if(training != "Yes"):
+            red_on()
+    elif printer_status == "ENABLED":
+        green_on()
+    else:
+        print("No Current User, Not Enabled")
+        red_on()
     return "Got it!"
 
 if __name__ == "__main__":
     ser = serial.Serial("/dev/ttyACM0", 115200)
     time.sleep(10)
+    
     app.run(debug=True, port=8080)
     
 ser.close()
