@@ -32,7 +32,7 @@ def getCardTypes():
         return options
 
 
-printerURL = "https://c00495bc.ngrok.io"
+printerURL = "http://d576482d.ngrok.io"
 
 app = Flask(__name__)
 app.config["ENV"] = "development"
@@ -47,17 +47,20 @@ def checkOn():
         form = request.form
         printer_of_interest = form.get("text")
         callback_URL = form.get("response_url")
+
         def do_work():
             # do something that takes a long time
             try:
                 r = requests.get(printerURL + "/status", timeout=5)
                 print(r.text)
+                r = requests.post(callback_URL, json={"text": r.text})
             except:
                 pass
 
         thread = Thread(target=do_work)
         thread.start()
-        return 'Checking on {}!'.format(printer_of_interest)
+        return "Checking on {}!".format(printer_of_interest)
+
 
 @app.route("/updateTrello", methods=["POST"])
 def updateTrello():
