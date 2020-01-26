@@ -16,7 +16,7 @@ while(True):
             r = requests.get(url = URL, timeout=5)
         except:
             print("Sending RFID to Printer server failed")
-            continue
+            pass
     last_read = id
     time.sleep(1)
     
