@@ -13,6 +13,24 @@ from trello import TrelloClient
 import json
 import requests
 
+
+def getCardTypes():
+    r = requests.get(
+        "https://api.trello.com/1/boards/{}/customFields?key={}&token={}".format(
+            BOARD_ID, API_KEY, API_TOKEN
+        )
+    )
+    options = dict()
+    card_types = list(filter(lambda x: x.get("id") == CARD_TYPE_FIELD_ID, r.json()))[
+        0
+    ].get("options")
+    for c in card_types:
+        options[c.get("id")] = c.get("value").get("text")
+        return options
+
+
+printerURL = "http://431d2772.ngrok.io"
+
 app = Flask(__name__)
 app.config["ENV"] = "development"
 
@@ -29,17 +47,7 @@ def updateTrello():
         ###}
         ###
         data = request.json
-        r = requests.get(
-            "https://api.trello.com/1/boards/{}/customFields?key={}&token={}".format(
-                BOARD_ID, API_KEY, API_TOKEN
-            )
-        )
-        options = dict()
-        card_types = list(
-            filter(lambda x: x.get("id") == CARD_TYPE_FIELD_ID, r.json())
-        )[0].get("options")
-        for c in card_types:
-            options[c.get("id")] = c.get("value").get("text")
+        options = getCardTypes()
         r = requests.get(
             "https://api.trello.com/1/boards/{}/cards/?&key={}&token={}".format(
                 BOARD_ID, API_KEY, API_TOKEN
@@ -48,6 +56,7 @@ def updateTrello():
         target_card = list(
             filter(lambda x: x.get("name") == data.get("printer"), r.json())
         )[0]
+        target_card_id = target_card.get("id")
         r = requests.get(
             "https://api.trello.com/1/cards/{}/?&key={}&token={}&customFieldItems=true".format(
                 target_card.get("id"), API_KEY, API_TOKEN
@@ -66,24 +75,27 @@ def updateTrello():
             )
         )[0]
         cardType = options[cardTypeField.get("idValue")]
-        updatedName = {"text": data.get("name")}
+
+        name = data.get("user_name")
+        print(name)
+        updatedName = {"text": name}
         r = requests.put(
             "https://api.trello.com/1/card/{}/customField/{}/item".format(
-                target_card.get("id"), USER_FIELD_ID
+                target_card_id, USER_FIELD_ID
             ),
             json={"value": updatedName, "key": API_KEY, "token": API_TOKEN},
         )
-        if data.get("name") == "Off Limits":
+        if name == "Off Limits":
             print("Changing Labels")
             r = requests.delete(
                 "https://api.trello.com/1/cards/{}/idLabels/{}?key={}&token={}".format(
-                    target_card.get("id"), GOOD_LABEL_ID, API_KEY, API_TOKEN
+                    target_card_id, GOOD_LABEL_ID, API_KEY, API_TOKEN
                 )
             )
 
             r = requests.post(
                 "https://api.trello.com/1/cards/{}/idLabels?value={}&key={}&token={}".format(
-                    target_card.get("id"), BAD_LABEL_ID, API_KEY, API_TOKEN
+                    target_card_id, BAD_LABEL_ID, API_KEY, API_TOKEN
                 )
             )
             print(r)
@@ -101,7 +113,10 @@ def callback():
         if change_type == "addLabelToCard":
             if change_label.get("text") == "Off Limits":
                 print(change_card.get("text") + " is off limits")
+                r = requests.get(printerURL + "/disable")
+                print(r)
             elif change_label.get("text") == "Functioning Normally":
                 print(change_card.get("text") + " is back up and running!")
-
+                r = requests.get(printerURL + "/enable")
+                print(r)
     return "CallingBack"
