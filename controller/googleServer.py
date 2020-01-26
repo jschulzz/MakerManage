@@ -13,7 +13,7 @@ SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly']
 SAMPLE_SPREADSHEET_ID = '1-_VbefW_BRP1RWYhXhdWdJCj1F4JxsRMwsqQ6yjEtZ8'
 DATA_RANGE_NAME = 'Sheet1!A:D'
 
-def main(id):
+def getUserById(id):
     """Shows basic usage of the Sheets API.
     Prints values from a sample spreadsheet.
     """
@@ -54,4 +54,4 @@ def main(id):
 
 
 if __name__ == '__main__':
-   print(main(id = 749555726993))
+   print(getUserById(id = 749555726993))

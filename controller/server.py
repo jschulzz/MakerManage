@@ -13,6 +13,8 @@ from trello import TrelloClient
 import json
 import requests
 
+from googleServer import getUserById
+
 
 def getCardTypes():
     r = requests.get(
@@ -41,11 +43,6 @@ if __name__ == "__main__":
 @app.route("/updateTrello", methods=["POST"])
 def updateTrello():
     if request.method == "POST":
-        ###{
-        ###     name
-        ###     printer
-        ###}
-        ###
         data = request.json
         options = getCardTypes()
         r = requests.get(
@@ -77,6 +74,10 @@ def updateTrello():
         cardType = options[cardTypeField.get("idValue")]
 
         name = data.get("user_name")
+        if name != "No Current User":
+            user = getUserById(name)
+            name = user[0]
+
         print(name)
         updatedName = {"text": name}
         r = requests.put(
@@ -98,7 +99,6 @@ def updateTrello():
                     target_card_id, BAD_LABEL_ID, API_KEY, API_TOKEN
                 )
             )
-            print(r)
     return ""
 
 
