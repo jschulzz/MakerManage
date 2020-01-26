@@ -48,23 +48,17 @@ def status():
         result_string = ""
         print("Pulling Current USB Stream!")
         ser.flushInput()
-        while time.time() - ts < 3:
-            print(time.time() - ts)
-            print("In time range")
+        message_len = 0
+        while time.time() - ts < 3 and message_len <= 3:
             if ser.in_waiting > 0:
                 print("Something was in Serial")
                 serialString1 = ser.readline()
                 decoded1 = serialString1.decode("Ascii")
+                result_string = result_string + "\n" + decoded1
+                message_len = message_len + 1
                 print(decoded1)
-                serialString2 = ser.readline()
-                decoded2 = serialString2.decode("Ascii")
-                serialString3 = ser.readline()
-                decoded3 = serialString3.decode("Ascii")
-                result_string = decoded1 + "\n" + decoded2 + "\n" + decoded3
-                print(result_string)
-                return result_string
-        print("Thank you")
-        return "Thank you!"
+        print(result_string)
+        return result_string
 
 
 @app.route("/RFID/<string:tag_id>")
