@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "makermanage",
+  "private_key_id": "02f1ce052e2bbf4d50b814ed5b19de56a232e16d",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC14s1sS2gsJdzx\nOT0eRWfwRBz1zmLJrItovU1AloUeqOZOdqr2HNl8qQv6I8W559tXYS4OjWeD8N7z\nUH5vUXGDP5ajQ7EFNmQVGfeou4LCQziaz/jKwyPH9DrjpBgN05qgfNjM79bcpuZb\nQhbuyRN6A+++58I78aug8TnEgGYZjEveKEoU+e/imMnqqO/EaFjeRstvxgPobygr\nePPjsIW1BbyW0SL0JT+JL1epyJNDXUWsip0ZU5Sdj2Dc/jA77+Wx/+xUoNWiTEA2\nt30mZIMYRDb6QOQOdr+HlbKMH1NTOSaREhGynsqX+WMYfWG3Y4mhuy99H8cXKs5Q\n3at2MRNHAgMBAAECggEAS1OGGrryBhKaOYaogrBg1tcGnWAfdoFQbQy1ATI1KFjv\npIAt1mZlReTmsm39NbxJkRsMjXdPbwui8eacrjJvDdmYY74lglCfy0NpV0Zs5VIc\nj7TgxuxhFa7Wcq9jTNqdN6jsypbrh49RaGrq/3Jj8AzQTeJChTvVhf5RG8nHPv2x\nip5Eke+fLS2fhUBN0899TeWtwmjrDDENvej3Q9kbC2vwFhFgYqk+/mELZuH9H0+9\nou5kd155oBiUo7piLmrLKVX/7yzT+78Vt9DDeFOAPpm2m7FVTpICkljGcH1RFMEP\nmMcgbC4fFOWdzOHiNSaQ93zgRlTplnb+BM7DfCsXrQKBgQDrMRmm3YJiceMtFc0c\noowUOyibTRj6UFbbm+HFxpxBRIGIUX2hewyCxjgnk8wq7/KtUfjQbCOkOMvvRc70\nwlJQGs+2GpJJ69OaT9SSzbKIAg/Ecg3kiz3ZSqX39af8qP6WFPczHltJH6P00nh+\nlkQMuq9ks4vvepl/stqW4QhJiwKBgQDF+l5oSIXm/XOfxoTXdK4mJi5fOCt+TibC\nT5s0uiqeGuR2gKsVMVdQFZXT2vJzsrR432kGljruoQ+EBJPDwrk/b9+/yXC8kyb+\nwLSjmvEHV705a/5DdQ/P4ED7t+GqVgSg7SaT08dZZKIM1yctNVjyZHEjFWZmPVAE\nwu5enFm8tQKBgEmwqq7jvJSHxnw71nZgX69/EawHLgpP3ccVQlorbo3snwFNNyW/\nXh4jaTjNUC0r3Ud85Y64MzqjKRKhNsTtlcjPfcE69hb/Mt+on5wXoxaGPtZ4Pe4b\nypcoknPsnmPFt27ixslXe5afuUleIK7Y+h1a6NWOhAvWx/2A1ohrnaMdAoGBAIvB\nBJnK8DMyIUfdhHLvm+u0MjHnXdSIaJXsShy7elAnnbUFeT+5l/AhfKWTvmjr8rgM\nxX/v1uQS7/f6nzCmqcxdNe6Vza5gljtpX1rKinDrf9kkIdYOsb3FiTnoATYUCKpt\nHjlmWygAgOBdlPs12Hcrbi4c8i8kAvOJg2loJ3StAoGAEreC30ACkTTQSNB8Ttkw\nYKmH1/Yo4kIYlv//VrqyON7wkq5Z5hpmTDCtcrQ/YEXmYRlMnWnW8qEJQk3n4qFB\nMUzzSsL+LUwH4k7ns5nsLNgKo7kFnLmrBM3IkqPvpq8s0Ikj+kIGDE9NDNcJI2xT\n8alPI6RO8OGheGAuYLevtBA=\n-----END PRIVATE KEY-----\n",
+  "client_email": "evan-king@makermanage.iam.gserviceaccount.com",
+  "client_id": "115378622809667458790",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/evan-king%40makermanage.iam.gserviceaccount.com"
+}
