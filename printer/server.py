@@ -58,15 +58,15 @@ def status():
 
 @app.route("/RFID/<string:tag_id>")
 def RFIDRecieved(tag_id):
+    tag_id = "No Current User" if tag_id == "None" else tag_id
     print(tag_id)
     LCD(tag_id)
-    if tag_id != "None":
-        r = requests.post("http://makermanage.holepunch.io/updateTrello", json={
-            "name": tag_id,
-            "printer": "Seattle Slew"
-            }, timeout=5
-        )
-        print(r)
+    r = requests.post("http://makermanage.holepunch.io/updateTrello", json={
+        "user_name": tag_id,
+        "printer": "Seattle Slew"
+        }, timeout=5
+    )
+    print(r)
     return "Got it!"
 
 if __name__ == "__main__":

@@ -36,5 +36,3 @@ def LCD(textInput):
         lcd.clear()
         text = textInput
         lcd.message(text)
-        
-LCD("SDFSDFSDF")
