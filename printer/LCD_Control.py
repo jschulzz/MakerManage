@@ -34,8 +34,7 @@ def LCD(textInput):
             time.sleep(1)
     else:
         lcd.clear()
-        text = textInputss
+        text = textInput
         lcd.message(text)
-
-     
-LCD('abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuv')
+        
+LCD("SDFSDFSDF")
