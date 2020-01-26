@@ -1,5 +1,4 @@
-from flask import Flask
-from flask import request
+from flask import Flask, request, jsonify
 from secrets import (
     API_KEY,
     API_TOKEN,
@@ -96,8 +95,9 @@ def updateTrello():
         cardType = options[cardTypeField.get("idValue")]
 
         name = data.get("user_name")
+        user = ["No Current User", "No"]
         if name != "No Current User":
-            user = getUserById(name)
+            user = getUserById(name) # Google Sheets
             name = user[0]
 
         print(name)
@@ -121,7 +121,7 @@ def updateTrello():
                     target_card_id, BAD_LABEL_ID, API_KEY, API_TOKEN
                 )
             )
-    return ""
+        return jsonify(user)
 
 
 @app.route("/trelloCallback", methods=["GET", "POST"])
