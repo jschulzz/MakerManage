@@ -9,6 +9,7 @@ from secrets import (
     GOOD_LABEL_ID,
     BAD_LABEL_ID,
 )
+from threading import Thread
 from trello import TrelloClient
 import json
 import requests
@@ -31,13 +32,34 @@ def getCardTypes():
         return options
 
 
-printerURL = "http://431d2772.ngrok.io"
+printerURL = "http://d576482d.ngrok.io"
 
 app = Flask(__name__)
 app.config["ENV"] = "development"
 
 if __name__ == "__main__":
     app.run(debug=True)
+
+
+@app.route("/check", methods=["POST"])
+def checkOn():
+    if request.method == "POST":
+        form = request.form
+        printer_of_interest = form.get("text")
+        callback_URL = form.get("response_url")
+
+        def do_work():
+            # do something that takes a long time
+            try:
+                r = requests.get(printerURL + "/status", timeout=5)
+                print(r.text)
+                r = requests.post(callback_URL, json={"text": r.text})
+            except:
+                pass
+
+        thread = Thread(target=do_work)
+        thread.start()
+        return "Checking on {}!".format(printer_of_interest)
 
 
 @app.route("/updateTrello", methods=["POST"])

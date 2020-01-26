@@ -3,6 +3,7 @@ import requests
 import serial
 import time
 import json
+from threading import Thread
 
 from send_gcode_file import send_file
 from setGPIO import set_pin
@@ -17,8 +18,12 @@ green_LED = 21
 
 @app.route("/test")
 def run_test():
-    send_file("test.gcode", "/dev/ttyUSB0")
-    return "Sending"
+    def do_work():
+        send_file("test.gcode", "/dev/ttyACM0")
+
+    thread = Thread(target=do_work)
+    thread.start()
+    return "Sending Test Print"
 
 
 @app.route("/disable")
@@ -41,19 +46,19 @@ def status():
         ser.write(str.encode("M27\n"))
         ts = time.time()
         result_string = ""
-        while time.time() - ts < 3000:
+        print("Pulling Current USB Stream!")
+        ser.flushInput()
+        message_len = 0
+        while time.time() - ts < 3 and message_len <= 3:
             if ser.in_waiting > 0:
-                ser.flushInput()
+                print("Something was in Serial")
                 serialString1 = ser.readline()
-                serialString2 = ser.readline()
-                serialString3 = ser.readline()
                 decoded1 = serialString1.decode("Ascii")
-                decoded2 = serialString2.decode("Ascii")
-                decoded3 = serialString3.decode("Ascii")
-                result_string = decoded1 + "\n" + decoded2 + "\n" + decoded3
-                print(result_string)
-                return result_string
-        return "Thank you!"
+                result_string = result_string + "\n" + decoded1
+                message_len = message_len + 1
+                print(decoded1)
+        print(result_string)
+        return result_string
 
 
 @app.route("/RFID/<string:tag_id>")
@@ -70,7 +75,7 @@ def RFIDRecieved(tag_id):
     return "Got it!"
 
 if __name__ == "__main__":
-    ser = serial.Serial("/dev/ttyUSB0", 250000)
+    ser = serial.Serial("/dev/ttyACM0", 115200)
     time.sleep(10)
     app.run(debug=True, port=8080)
     

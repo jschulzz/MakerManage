@@ -5,7 +5,7 @@ def send_file(filename, port):
     import serial
     import time
     
-    ser = serial.Serial(port, 250000)
+    ser = serial.Serial(port, 115200)
     time.sleep(10)
     with open(filename) as fp:
         line = fp.readline()
