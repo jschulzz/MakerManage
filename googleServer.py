@@ -1,5 +1,6 @@
 from __future__ import print_function
 import pickle
+import json
 import os.path
 from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
@@ -10,7 +11,7 @@ SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly']
 
 # The ID and range of a sample spreadsheet.
 SAMPLE_SPREADSHEET_ID = '1-_VbefW_BRP1RWYhXhdWdJCj1F4JxsRMwsqQ6yjEtZ8'
-RFID_RANGE_NAME = 'Sheet1!A:D'
+DATA_RANGE_NAME = 'Sheet1!A:D'
 
 def main(id):
     """Shows basic usage of the Sheets API.
@@ -40,25 +41,17 @@ def main(id):
     # Call the Sheets API
     sheet = service.spreadsheets()
     result = sheet.values().get(spreadsheetId=SAMPLE_SPREADSHEET_ID,
-                                range=RFID_RANGE_NAME).execute()
-    values = result.get('values', [])
-    condensedValues = []
-    if not values:
+                                range=DATA_RANGE_NAME).execute()                         
+
+    if not result:
         print('No data found.')
     else:
-        for RFID in values:
-            condensedValues += RFID
-            print(condensedValues)
-        for RFID in values:
-            print((RFID[0]))
-            print((str(id)))
-            if RFID[0] == str(id):
-                print("Found em!")
+        #print(json.dumps(result, indent=2))
+        for value in result.get("values"):
+            if value[0] == str(id):
+                return [value[1], value[2]]
 
-        # targetRow = ord(values.index(eval(str(id)))) - 38
-        # STUDENT_NAME_RANGE = 'Sheet1!B' + str(targetRow) + ':D' + str(targetRow)
-        # print(STUDENT_NAME_RANGE)
 
 
 if __name__ == '__main__':
-    print(main(1637812764))
+   print(main(id = 749555726993))
